@@ -2,6 +2,7 @@ package com.github.udm.extract
 
 //....
 object YoutubeExt: CommonMethods {
+  
   override fun onFileExt(mPara: JSONObject, context0: Context?): JSONObject {
     try {
       val mClient = OkHttpClient()
@@ -16,3 +17,10 @@ object YoutubeExt: CommonMethods {
         when (jsFiles.length()) {
           1 -> mPara.put(FI_URL_TASK, LK_URL_B)
           else -> mPara.put(FI_URL_TASK, LK_URL_C)
+        }
+        
+        mPara.put(FI_RESULT, true)
+      }
+    }
+    return super.onFileExt(mPara, context0)
+  }
