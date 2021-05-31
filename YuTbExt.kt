@@ -22,7 +22,7 @@ object YuTbExt : CommonMethods {
     override fun onFileExt(mPara: JSONObject, context0: Context?): JSONObject {
         mPara.put(FI_ERROR_MSG, mNote)
         try {
-            println("Youtube-Ext")
+
             val mClient = OkHttpClient()
             val pageLink = mPara.getString(FI_PAGE_URL)
 
@@ -33,17 +33,10 @@ object YuTbExt : CommonMethods {
                 .addHeader("User-Agent",TestUrl.__UserAgent[1])
                 .build()
 
-            // #Disable - Off line data test
             val response01 = mClient.newCall(request01).execute()
             if (!response01.isSuccessful) return mPara
 
             val pageData = response01.body?.string() ?: return mPara
-
-            // #Test
-            //val pageData = context0?.assets?.open("youtube_page_source")?.bufferedReader(Charset.defaultCharset()).use { it?.readText() } ?: return mPara
-
-            // #TEST
-            //ut0WriteData(data = pageData, mFilename = "youtube_page_source", mContext = context0!!)
 
             // #FUNCTION
             fun extractPlayerResponse(playerResponse: String?): JSONObject {
@@ -106,9 +99,6 @@ object YuTbExt : CommonMethods {
                         })
                     }
                 }
-
-                // #TEST
-                //ut0WriteData(data = streamingFormats.toString(), mFilename = "youtube_streaming_formats", mContext = context0!!)
 
                 for (nm0 in 0 until streamingFormats.length()) {
                     val fmt0 = streamingFormats.f0Object(nm0) ?: continue
@@ -199,14 +189,7 @@ object YuTbExt : CommonMethods {
                         }
                     }
 
-                    // #TEST
-                    //ut0WriteData(data = urlData.toString(), mFilename = "youtube_urlData_0a${nm0}", mContext = context0!!)
 
-                    // #TEST
-                    //ut0WriteData(data = fmt0.toString(), mFilename = "youtube_fmt0a__${nm0}", mContext = context0!!)
-
-                    // #TEST
-                    //ut0WriteData(data = dct0.toString(), mFilename = "youtube_dct0a_${nm0}.json", mContext = context0!!)
                     val onStrTemplate = fun (str0: String): String {
                         return String.format(context0!!.getString(R.string.media_opt_summary_d),
                         str0)
@@ -271,9 +254,6 @@ object YuTbExt : CommonMethods {
                     else -> mPara.put(FI_URL_TASK, LK_URL_C)
                 }
                 mPara.put(FI_RESULT, true)
-
-                //ut0WriteData(data = mPara.toString(), mFilename = "youtube_json_c", mContext = context0!!)
-                //println("#YU::finally")
             }
         }
         return super.onFileExt(mPara, context0)
